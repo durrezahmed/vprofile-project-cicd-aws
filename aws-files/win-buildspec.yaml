@@ -1,0 +1,17 @@
+version: 0.2
+phases:
+  build:
+    commands:
+      - Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+      - choco install jdk8 -y
+      - choco install maven -y
+      - choco install googlechrome -y
+      - choco install git -y
+      - mkdir C:\output
+      - Start-Sleep -s 360
+      - cd src\seleniumscripts\
+      - mvn clean test -Dsurefire  -Durl=http://vprofile-env.eba-xvrnrqp3.us-east-1.elasticbeanstalk.com/login -Dusr=admin_vp -Dpass=admin_vp -DsShotPath=C:\\output\\ScrnSht_
+      - cp C:\output\* .
+artifacts:
+  files:
+    - '**/*'
